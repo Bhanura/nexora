@@ -71,7 +71,11 @@ DOWNLOAD_DELAY = 1
 
 # Enable the FilesPipeline
 ITEM_PIPELINES = {
-    "scrapy.pipelines.files.FilesPipeline": 1,
+    # Step 1: Download the file (Low number = Higher priority)
+    'scrapy.pipelines.files.FilesPipeline': 1,
+    
+    # Step 2: Parse the file (Higher number = Runs after Step 1)
+    'nexora_crawler.pipelines.PdfParsingPipeline': 300,
 }
 
 # Where to save the files? (We create a "downloads" folder in your project)
