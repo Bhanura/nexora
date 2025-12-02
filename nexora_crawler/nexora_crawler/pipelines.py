@@ -1,3 +1,4 @@
+import pymongo
 import fitz # PyMuPDF
 import os
 # useful for handling different item types with a single interface
@@ -40,3 +41,28 @@ class PdfParsingPipeline:
             return "\n".join(text)
         except Exception as e:
             return f"Error reading PDF: {e}"
+                
+class MongoPipeline:
+    def __init__(self):
+        # We read the URI from the environment variable (loaded in settings.py)
+        self.mongo_uri = os.getenv("MONGO_URI")
+        self.db_name = "nexora_db"
+        self.collection_name = "raw_materials" # We call it raw because it's not vectorized yet
+
+    def open_spider(self, spider):
+        # Connect when the spider starts
+        self.client = pymongo.MongoClient(self.mongo_uri)
+        self.db = self.client[self.db_name]
+
+    def close_spider(self, spider):
+        # Disconnect when finished
+        self.client.close()
+
+    def process_item(self, item, spider):
+        # We convert the Scrapy Item to a normal Python Dictionary
+        data = dict(item)
+        
+        # Insert into MongoDB
+        self.db[self.collection_name].insert_one(data)
+        
+        return item

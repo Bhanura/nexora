@@ -76,6 +76,9 @@ ITEM_PIPELINES = {
     
     # Step 2: Parse the file (Higher number = Runs after Step 1)
     'nexora_crawler.pipelines.PdfParsingPipeline': 300,
+
+    # Step 3: MongoDB Pipeline
+    'nexora_crawler.pipelines.MongoPipeline': 400,
 }
 
 # Where to save the files? (We create a "downloads" folder in your project)
