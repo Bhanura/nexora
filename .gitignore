@@ -1,0 +1,17 @@
+# Security: Never push the environment file
+.env
+
+# Python: Ignore compiled files
+__pycache__/
+*.pyc
+
+# Virtual Environment: Ignore the tools folder
+venv/
+.venv/
+
+# Scrapy: Ignore local crawl data
+.scrapy/
+
+# IDE: Ignore VS Code or PyCharm settings
+.vscode/
+.idea/
