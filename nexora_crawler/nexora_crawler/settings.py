@@ -68,9 +68,17 @@ DOWNLOAD_DELAY = 1
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    "nexora_crawler.pipelines.NexoraCrawlerPipeline": 300,
-#}
+
+# Enable the FilesPipeline
+ITEM_PIPELINES = {
+    "scrapy.pipelines.files.FilesPipeline": 1,
+}
+
+# Where to save the files? (We create a "downloads" folder in your project)
+FILES_STORE = os.path.join(os.getcwd(), 'downloads')
+
+# Allow Scrapy to follow redirects (useful for file download links)
+MEDIA_ALLOW_REDIRECTS = True
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
